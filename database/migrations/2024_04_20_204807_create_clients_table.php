@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('email')->unique();
             $table->string('telephone')->nullable(false);
-            $table->string('Type of moto')->nullable(false);
+            $table->string('Type_of_moto')->nullable(false);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated-at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
