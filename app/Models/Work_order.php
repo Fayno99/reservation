@@ -18,6 +18,7 @@ class Work_order extends Model
             'masters_id',
             'clients_id',
             'works_id',
+            'motorcycles',
             'start_order',
             'stop_order',
         ];

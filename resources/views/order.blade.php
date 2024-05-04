@@ -55,10 +55,9 @@
                     <a href="{{ asset('index') }}" class="nav-item nav-link">Домашня</a>
                     <a href="{{ asset('master') }}" class="nav-item nav-link active">Сервіс</a>
                     <a href="{{ asset('about') }}" class="nav-item nav-link">Про нас</a>
-                    <a href="{{ asset('dayOff')}}" class="nav-item nav-link">Вихідний Майстра</a>
-                </div>
-                <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
-                <a href="https://htmlcodex.com/startup-company-website-template" class="btn btn-primary py-2 px-4 ms-3">Увійти</a>
+                    @include('shablon.UserDropdown')
+
+
             </div>
         </nav>
 
@@ -92,33 +91,7 @@
             </div>
         </div>
     </div>
-    @if(Session::has('success'))
-    <!-- Full Screen Search End -->
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.05s">
-        <div class="container py-5">
-            <div class="row g-5">
-
-
-                    <div class="alert alert-success">
-                        <h1 class="mb-3">  {{ Session::get('success') }}</h1>
-                        <div class="alert alert-success" data-wow-delay="0.6s">
-                            <h4 class="mb-3">Компанія: {{$work_order->companies_id}}</h4>
-                            <h3 class="mb-3">Ім'я механіка: {{$work_order->masters_id}}</h3>
-                            <h3 class="mb-3">Ім'я клієнта: {{$work_order->clients_id}} </h3>
-                            <h3 class="mb-3">Вид роботи: {{$work_order->works_id}} </h3>
-                            <h3 class="mb-3">Початок замовлення: {{$work_order->start_order}} </h3>
-                            <h3 class="mb-3">Кінець замовлення:  {{$work_order->stop_order}} </h3>
-                        </div>
-                    </div>
-                 </div>
-
-             </div>
-         </div>
-    </div>
-
-
-@else
-    {{--    <!-- Quote Start -->--}}
+      {{--    <!-- Quote Start -->--}}
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.05s">
         <div class="container py-5">
             <div class="row g-5">
@@ -143,6 +116,25 @@
                         </div>
                     </div>
                 </div>
+                @if(Auth::check() && Auth::user()->isUser())
+                    <div class="col-lg-5">
+                        <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
+                            <form action="{{ route('order.store') }}" method="post">
+                                @csrf
+                                <div class="row g-3">
+                                    <div class="col-xl-12">
+                                        <h1 type="text" class="form-control bg-light border-0" name="name"  placeholder="{{ Auth::user()->name }}" style="height: 55px; font-size: 30px;">{{ Auth::user()->name }}</h1>
+                                </div>
+                                <div class="col-12">
+                                    <textarea class="form-control bg-light border-0" rows="3" name="Type_of_moto" placeholder="Мапишіть свою марку мотоцикла"></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-dark w-100 py-3" type="submit">Зробити замовлення послуги</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @else
                 <div class="col-lg-5">
                     <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
                         <form action="{{ route('order.store') }}" method="post">
@@ -153,9 +145,6 @@
                                 </div>
                                 <div class="col-12">
                                     <input type="email" class="form-control bg-light border-0" name="email"  placeholder="Ваш Email" style="height: 55px;">
-                                </div>
-                                <div class="col-xl-12">
-                                    <input type="text" class="form-control bg-light border-0" name="password"  placeholder="Password" style="height: 55px;">
                                 </div>
                                 <div class="col-xl-12">
                                     <input type="text" class="form-control bg-light border-0" name="telephone" placeholder="Номер телефону" style="height: 55px;">
@@ -170,10 +159,12 @@
                         </form>
                     </div>
                 </div>
+                @endif
+
             </div>
         </div>
     </div>
-@endif
+
     <!-- Quote End -->
  @include('shablon.downbar')
 

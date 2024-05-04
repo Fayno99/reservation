@@ -18,7 +18,6 @@ class Client extends Model
             'email',
             'password',
             'telephone',
-            'Type_of_moto',
             'created_at',
             'updated_at',
         ];

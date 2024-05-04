@@ -11,6 +11,7 @@ use DatePeriod;
 use DateTime;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use function Symfony\Component\String\s;
 
@@ -187,26 +188,36 @@ return view('index', ['reviewList'=>$reviewList,'masterList'=>$masterList, 'serv
 
         public function store(Request $request)
     {
-        $client = new Client();
-        $client->name = $request->input('name');
-        $client->password = bcrypt($request->input('password'));
-        $client->email = $request->input('email');
-        $client->telephone = $request->input('telephone');
-        $client->Type_of_moto = $request->input('Type_of_moto');
-        $client->save();
-        Session::put('id_client',$client->id );
+        $userId='0';
+        $clientId='1';
+        if(Auth::check()){
+            $userId=Auth::id();
+
+        } else {
+            $client = new Client();
+            $client->name = $request->input('name');
+            $client->email = $request->input('email');
+            $client->telephone = $request->input('telephone');
+
+            $client->save();
+            Session::put('id_client',$client->id );
+            $clientId = Session::get('id_client');
+        }
+
 
         $startTime = Session::get('start-time');
         $endTime = Session::get('end-time');
         $masterId = Session::get('master_id');
         $serviceId = Session::get('service_id');
-        $clientId = Session::get('id_client');
+
 
         $order = new Work_order();
         $order->companies_id = (1);
         $order->masters_id = $masterId;
         $order->clients_id = $clientId ;
+        $order->users_id = $userId;
         $order->works_id = $serviceId;
+        $order->motorcycles = $request->input('Type_of_moto');
         $order->start_order = $startTime;
         $order->stop_order = $endTime;
         $order->save();
@@ -220,8 +231,22 @@ return view('index', ['reviewList'=>$reviewList,'masterList'=>$masterList, 'serv
     public function ShowWorkOrder(Request $request)
     {
         $id = Session::get('orderId');
-      $work_order = \App\Models\Work_order::find($id);
-        return  view('confirm', ['work_order'=>$work_order]);
+     // $work_order = \App\Models\Work_order::find($id);
+        $work_orders = \App\Models\Work_order::with('master', 'companies', 'client', 'work')->where('id', $id)->get();
+        $work_orderList = [];
+        foreach ($work_orders as $work_order)
+        {
+            $work_order->masterName = $work_order->master->name;
+            $work_order->clientName = $work_order->client->name;
+            $work_order->companiesName = $work_order->companies->name;
+            $work_order->workName = $work_order->work->name_of_work;
+            unset($work_order->masters_id);
+            $work_orderList[] = $work_order;
+        }
+
+//dd($work_orderList);
+
+        return  view('confirm', ['work_order'=>$work_orderList]);
     }
 
     public function schedules()
@@ -243,6 +268,25 @@ return view('index', ['reviewList'=>$reviewList,'masterList'=>$masterList, 'serv
 
 
         return view('schedules', ['schedules'=>$scheduleList]);
+    }
+
+
+
+    public function userHistory (Request $request, $id)
+    {
+        $histories = \App\Models\Work_order::with('master', 'companies', 'client', 'work')->where('users_id', $id)->get();
+        $historiesList = [];
+        foreach ($histories as $history)
+        {
+            $history->masterName = $history->master->name;
+            $history->clientName = $history->client->name;
+            $history->companiesName = $history->companies->name;
+            $history->workName = $history->work->name_of_work;
+            unset($history->masters_id);
+            $historiesList[] = $history;
+        }
+        return view('userHistory', [ 'HistoryList'=>$historiesList]);
+
     }
 }
 

@@ -1,10 +1,25 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('index');
 });
+
+Route::get('/dashboard', function () {
+    return redirect('index');
+
+
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
 
 
 
@@ -28,7 +43,8 @@ Route::get('/order/create', '\App\Http\Controllers\MainController@create')->name
 Route::post('/order/store', '\App\Http\Controllers\MainController@store')->name('order.store');
 
 
-Route::get('/schedules',[\App\Http\Controllers\MainController::class, 'schedules']);
+Route::get('/schedules',[\App\Http\Controllers\MainController::class, 'schedules'])->middleware('can:view-schedules');
+Route::get('/schedules/{userid}',[\App\Http\Controllers\MainController::class, 'userHistory']);
 
 
 Route::get('/about', function () {
@@ -43,4 +59,8 @@ Route::get('/dayOff/create', '\App\Http\Controllers\DayOffController@create')->n
 Route::post('/dayOff/store', '\App\Http\Controllers\DayOffController@store')->name('DayOff.store');
 
 
+
+
+Route::get('/dayOff', [\App\Http\Controllers\DayOffController::class, 'TotalDayOff'])->middleware('can:view-day-off');
+Route::get('/dayOff/{any}', [\App\Http\Controllers\DayOffController::class, 'TotalDayOff'])->where('any', '.*')->middleware('can:view-day-off');
 

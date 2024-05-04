@@ -26,6 +26,7 @@ return new class extends Migration
         Schema::table('work_orders', function (Blueprint $table) {
             $table->foreign('masters_id')->references('id')->on('masters')->onDelete('cascade');
             $table->foreign('clients_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('works_id')->references('id')->on('works')->onDelete('cascade');
             $table->foreign('companies_id')->references('id')->on('companies')->onDelete('cascade');
         });
@@ -50,6 +51,7 @@ return new class extends Migration
         Schema::table('work_orders', function (Blueprint $table) {
             $table->dropForeign(['masters_id']);
             $table->dropForeign(['clients_id']);
+            $table->dropForeign(['users_id']);
             $table->dropForeign(['works_id']);
             $table->dropForeign(['companies_id']);
         });
