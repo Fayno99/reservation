@@ -25,11 +25,9 @@
                     <a href="{{ asset('index')}}" class="nav-item nav-link">Домашня</a>
                     <a href="{{ asset('master')}}" class="nav-item nav-link">Сервіс</a>
                     <a href="{{ asset('about')}}" class="nav-item nav-link active">Про нас</a>
-                    <a href="{{ asset('dayOff')}}" class="nav-item nav-link">Вихідний Майстра</a>
-                </div>
-                <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
-                <a href="https://htmlcodex.com/startup-company-website-template" class="btn btn-primary py-2 px-4 ms-3">Увійти</a>
-            </div>
+                    @include('shablon.UserDropdown')
+
+          </div>
         </nav>
 
     <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">

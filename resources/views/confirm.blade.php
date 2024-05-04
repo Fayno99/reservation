@@ -55,19 +55,16 @@
                     <a href="{{ asset('index') }}" class="nav-item nav-link">Домашня</a>
                     <a href="{{ asset('master') }}" class="nav-item nav-link">Сервіс</a>
                     <a href="{{ asset('about') }}" class="nav-item nav-link">Про нас</a>
-                    <a href="{{ asset('dayOff')}}" class="nav-item nav-link">Вихідний Майстра</a>
+                    @include('shablon.UserDropdown')
 
 
-                </div>
-                <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
-                <a href="https://htmlcodex.com/startup-company-website-template" class="btn btn-primary py-2 px-4 ms-3">Увійти</a>
             </div>
         </nav>
 
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">Час</h1>
+                    <h1 class="display-4 text-white animated zoomIn">Заявка</h1>
                     <a href="{{ asset('index') }}" class="h5 text-white">Додому</a>
                     <i class="far fa-circle text-white px-2"></i>
                     <a href="{{ asset('services') }}" class="h5 text-white">Сервіс</a>
@@ -101,17 +98,20 @@
                 <div class="row g-5">
 
 
-                    <div class="alert alert-success">
-                        <h1 class="mb-3">  {{ Session::get('success') }}</h1>
-                        <div class="alert alert-success" data-wow-delay="0.6s">
-                            <h4 class="mb-3">Компанія: {{$work_order->companies_id}}</h4>
-                            <h3 class="mb-3">Ім'я механіка: {{$work_order->masters_id}}</h3>
-                            <h3 class="mb-3">Ім'я клієнта: {{$work_order->clients_id}} </h3>
-                            <h3 class="mb-3">Вид роботи: {{$work_order->works_id}} </h3>
-                            <h3 class="mb-3">Початок замовлення: {{$work_order->start_order}} </h3>
-                            <h3 class="mb-3">Кінець замовлення:  {{$work_order->stop_order}} </h3>
+                    @foreach($work_order as $order)
+                        <div class="alert alert-success">
+                            <h1 class="mb-3">  {{ Session::get('success') }}</h1>
+                            <div class="alert alert-success" data-wow-delay="0.6s">
+                                <h4 class="mb-3">Компанія: {{$order->companiesName}}</h4>
+                                <h3 class="mb-3">Ім'я механіка: {{$order->masterName}}</h3>
+                                <h3 class="mb-3">Вид роботи: {{$order->workName}} </h3>
+                                <h3 class="mb-3">Тип мотоциклу: {{$order->motorcycles}} </h3>
+                                <h3 class="mb-3">Початок замовлення: {{$order->start_order}} </h3>
+                                <h3 class="mb-3">Кінець замовлення:  {{$order->stop_order}} </h3>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
+
                 </div>
 
             </div>

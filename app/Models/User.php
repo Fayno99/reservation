@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 protected $table = 'users';
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -44,4 +45,25 @@ protected $table = 'users';
             'password' => 'hashed',
         ];
     }
+
+    public function isManager()
+    {
+        return $this->isAdmin == '4'; //manager
+    }
+
+    public function isAdmin()
+    {
+        return $this->isAdmin == '3'; //admin
+    }
+
+    public function isAssistant()
+    {
+        return $this->isAdmin == '2';   //assistant
+    }
+
+    public function isUser()
+    {
+        return $this->isAdmin == '1';  ///User
+    }
+
 }

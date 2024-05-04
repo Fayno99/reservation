@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable(false);
-            $table->string('password');
-            $table->string('email')->unique();
+            $table->string('email')->nullable(false);
             $table->string('telephone')->nullable(false);
-            $table->string('Type_of_moto')->nullable(false);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated-at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
