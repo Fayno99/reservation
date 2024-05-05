@@ -26,7 +26,7 @@
                     <a href="{{ asset('about') }}" class="nav-item nav-link">Про нас</a>
                     @include('shablon.UserDropdown')
 
-            </div>
+                </div>
         </nav>
 
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
@@ -43,6 +43,9 @@
     <!-- Navbar End -->
 
 
+
+
+    <!-- Navbar End -->
 
     <!-- Full Screen Search Start -->
     <div class="modal fade" id="searchModal" tabindex="-1">
@@ -62,35 +65,59 @@
     </div>
     <!-- Full Screen Search End -->
 
+        <div class="container-fluid facts py-5 pt-lg-0">
+            <div class="container py-5 pt-lg-0">
+                <div class="row gx-0">
+                    <div class="col-10">
+                    </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="h1 text-white">  Ім'я   </th>
+                            <th class="h1 text-white"> Емейл  </th>
+                            <th class="h1 text-white"> Телефон  </th>
+                            <th class="h1 text-white"> Статус  </th>
+                            <th class="h1 text-white">  </th>
+                        </tr>
+                        </thead>
 
-    <div class="container-fluid facts py-5 pt-lg-0">
-        <div class="container py-5 pt-lg-0">
-            <div class="row gx-0">
-                <div class="col-10">
-              </div>
-                <h2 class="nav-item nav-link" > Запис створено повернутись на попередню сторінку  <a href="{{ asset('dayOff')}}" class="btn btn-primary py-2 px-4 ms-3">Вихідний Майстра</a></h2>
-                   <form action="{{ route('DayOff.store') }}" method="post">
-                        @csrf
-                       <table class="table">
-                         <thead>
+                        <tbody>
+                        @foreach($adminList as $admin)
                             <tr>
-                                <th class="h1 text-white">  День відпустки  </th>
-                                <th class="h1 text-white">  Робітник </th>
+                                <td class="h1 text-primary mb-4">{{ $admin->name }}</td>
+                                <td class="h1 text-primary mb-4">{{ $admin->email }}</td>
+                                <td class="h1 text-primary mb-4">{{ $admin->telephone }}</td>
+                                <td class="h1 text-primary mb-4">
+                                    <select id="SelectStatus{{ $admin->id }}" class="form-select">
+                                        <option selected class="mb-3">{{ $admin->isAdmin }}</option>
+                                        <option value="1">USER</option>
+                                        <option value="2">ASSISTANT</option>
+                                        <option value="3">ADMIN</option>
+                                        <option value="4">MANAGER</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="text-center">
+                                        <a href="#" id="createDayOffButton" class="btn btn-primary py-2 px-4 ms-3" onclick="
+                        const SelectStatus = document.getElementById('SelectStatus{{ $admin->id }}').value;
+                        const dayOffUrl = `admin/{{ $admin->id }}/${SelectStatus}/`;
+                        window.location.href = dayOffUrl;
+                    "> Зміна Статусу</a>
+                                    </div>
+                                </td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($dayOffSlots as $dayOffSlot)
-                                <tr>
-                                    <td class="h1 text-primary mb-4" >{{ $dayOffSlot['dayOff'] }}</td>
-                                    <td class="h1 text-primary mb-4">{{ $dayOffSlot['WorkerId'] }}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                   </form>
-               </div>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+
+
+
+
+
+
 
 
     @include('shablon.downbar')
@@ -99,6 +126,7 @@
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 </div>
-</body>
+<body>
 
-    @include('shablon.js')
+@include('shablon.js')
+

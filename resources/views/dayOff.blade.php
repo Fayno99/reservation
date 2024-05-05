@@ -135,10 +135,10 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($MasterSchedules as $MasterSchedule)
+                                    @foreach($masterSchedules as $masterSchedule)
                                         <tr>
-                                            <td class="h1 text-primary mb-4" >{{ $MasterSchedule['masterName'] }}</td>
-                                            <td class="h1 text-primary mb-4">{{ $MasterSchedule['work_day'] }}</td>
+                                            <td class="h1 text-primary mb-4" >{{ $masterSchedule->master->name }}</td>
+                                            <td class="h1 text-primary mb-4">{{ $masterSchedule['work_day'] }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

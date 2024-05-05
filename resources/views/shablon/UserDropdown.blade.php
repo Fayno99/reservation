@@ -27,6 +27,12 @@
             </x-dropdown-link>
         @endif
 
+        @if(Auth::user()->isAdmin())
+            <x-dropdown-link  href="{{ asset('admin')}}"  >
+                {{ __('Адмін') }}
+            </x-dropdown-link>
+        @endif
+
         <!-- Authentication -->
         <form method="POST" action="{{ route('logout') }}">
             @csrf

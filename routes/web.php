@@ -43,7 +43,7 @@ Route::get('/order/create', '\App\Http\Controllers\MainController@create')->name
 Route::post('/order/store', '\App\Http\Controllers\MainController@store')->name('order.store');
 
 
-Route::get('/schedules',[\App\Http\Controllers\MainController::class, 'schedules'])->middleware('can:view-schedules');
+Route::get('/schedules',[\App\Http\Controllers\MainController::class, 'schedules'])->middleware('auth.assistant');
 Route::get('/schedules/{userid}',[\App\Http\Controllers\MainController::class, 'userHistory']);
 
 
@@ -61,6 +61,10 @@ Route::post('/dayOff/store', '\App\Http\Controllers\DayOffController@store')->na
 
 
 
-Route::get('/dayOff', [\App\Http\Controllers\DayOffController::class, 'TotalDayOff'])->middleware('can:view-day-off');
-Route::get('/dayOff/{any}', [\App\Http\Controllers\DayOffController::class, 'TotalDayOff'])->where('any', '.*')->middleware('can:view-day-off');
+Route::get('/dayOff', [\App\Http\Controllers\DayOffController::class, 'TotalDayOff'])->middleware('auth.manager');
+Route::get('/dayOff/{any}', [\App\Http\Controllers\DayOffController::class, 'TotalDayOff'])->where('any', '.*')->middleware('auth.manager');
 
+
+
+Route::get('/admin', [\App\Http\Controllers\MainController::class, 'adminListUser'])->name('adminListUser')->middleware('auth.admin');
+Route::get('/admin/{status}/{id}', [\App\Http\Controllers\MainController::class, 'adminListChange'])->middleware('auth.admin');

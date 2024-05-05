@@ -63,30 +63,40 @@
             <div class="container py-5 pt-lg-0">
                 <div class="row gx-0">
                     <div class="col-10">
+
+
                     </div>
                     <table class="table">
                         <thead>
                         <tr>
-                            <th class="h1 text-white">  Робітник  </th>
                             <th class="h1 text-white"> Клієнт  </th>
+                            <th class="h1 text-white"> User  </th>
                             <th class="h1 text-white"> Вид робіт  </th>
+                            <th class="h1 text-white"> Мотоцикл  </th>
                             <th class="h1 text-white"> Початок  </th>
                             <th class="h1 text-white"> Кінець  </th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($schedules as $Schedule)
+                        @foreach($schedules as $masterName => $scheduleGroup)
                             <tr>
-                                <td class="h1 text-primary mb-4" >{{ $Schedule['masterName'] }}</td>
-                                <td class="h1 text-primary mb-4">{{ $Schedule['clientName'] }}</td>
-                                <td class="h1 text-primary mb-4">{{ $Schedule['workName'] }}</td>
-                                <td class="h1 text-primary mb-4">{{ $Schedule['start_order'] }}</td>
-                                <td class="h1 text-primary mb-4">{{ $Schedule['stop_order'] }}</td>
+                                <th colspan="6" class="h1 text-white">Робітник: {{ $masterName }}</th>
                             </tr>
+                            @foreach($scheduleGroup as $schedule)
+                                <tr>
+                                    <td>{{ $schedule->client->name }}</td>
+                                    <td>{{ $schedule->users_id }}</td>
+                                    <td>{{ $schedule->work->name_of_work }}</td>
+                                    <td>{{ $schedule->motorcycles }}</td>
+                                    <td>{{ $schedule->start_order }}</td>
+                                    <td>{{ $schedule->stop_order }}</td>
+                                </tr>
+                            @endforeach
                         @endforeach
                         </tbody>
                     </table>
-            </div>
+
+                </div>
         </div>
     </div>
 
