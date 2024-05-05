@@ -83,14 +83,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($HistoryList as $History)
+                        @foreach($historyList as $history)
                         <tr>
-                            <td class="h1 text-primary mb-4" >{{ $History['companiesName'] }}</td>
-                            <td class="h1 text-primary mb-4">{{ $History['masterName'] }}</td>
-                            <td class="h1 text-primary mb-4">{{ $History['motorcycles'] }}</td>
-                            <td class="h1 text-primary mb-4">{{ $History['workName'] }}</td>
-                            <td class="h1 text-primary mb-4">{{ $History['start_order'] }}</td>
-                            <td class="h1 text-primary mb-4">{{ $History['stop_order'] }}</td>
+                            <td class="h1 text-primary mb-4" >{{ $history->companies->name }}</td>
+                            <td class="h1 text-primary mb-4">{{ $history->master->name }}</td>
+                            <td class="h1 text-primary mb-4">{{ $history['motorcycles'] }}</td>
+                            <td class="h1 text-primary mb-4">{{ $history->work->name }}</td>
+                            <td class="h1 text-primary mb-4">{{ $history['start_order'] }}</td>
+                            <td class="h1 text-primary mb-4">{{ $history['stop_order'] }}</td>
                         </tr>
                         @endforeach
                         </tbody>

@@ -13,7 +13,7 @@
                         <i class="fa fa-search text-white"></i>
                     </div>
                     <h4 class="mb-3">{{$service->name_of_work}}</h4>
-                    <p class="m-0">{{$service->description}}</p>
+                    <p class="mb-3">{{$service->description}}</p>
                     <a class="btn btn-lg btn-primary rounded" href="/master">
                         <i class="bi bi-arrow-right"></i>
                     </a>

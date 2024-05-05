@@ -23,13 +23,13 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('view-day-off', function ($user) {
-            return $user->isAdmin()||$user->isManager();
-        });
-
-        Gate::define('view-schedules', function ($user) {
-            return $user->isAdmin()||$user->isAssistant();
-        });
+//        Gate::define('view-day-off', function ($user) {
+//            return $user->isAdmin()||$user->isManager();
+//        });
+//
+//        Gate::define('view-schedules', function ($user) {
+//            return $user->isAdmin()||$user->isAssistant();
+//        });
 
     }
 

@@ -14,7 +14,7 @@
                     <img class="img-fluid rounded" src="{{ asset('img/testimonial-4.jpg')}}" style="width: 60px; height: 60px;" >
                     <div class="ps-4">
                         <h3 class="text-primary mb-1"> Оцінка {{$review->stars}}/5</h3>
-                        <h4 class="text-primary mb-1"> Робив майстер {{$review->masterName}}</h4>
+                        <h4 class="text-primary mb-1"> Робив майстер {{$review->master->name}}</h4>
                     </div>
                 </div>
                 <h3 class="pt-4 pb-5 px-5 mb-4 ">

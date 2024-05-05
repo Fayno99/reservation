@@ -11,33 +11,24 @@ class DayOffController extends Controller
 {
     public function TotalDayOff()
     {
-        $MasterSchedules= \App\Models\Master_schedule::with('master')->get();
-        $MasterSchedulesList = [];
-        foreach ($MasterSchedules as $MasterSchedule)
-        {
-            $MasterSchedule->masterName = $MasterSchedule->master->name;
-            unset($MasterSchedule->masters_id);
-            $MasterSchedulesList[] = $MasterSchedule;
-        }
-     //   dd($MasterSchedulesList);
-
+        $masterSchedules= \App\Models\Master_schedule::with('master')->get();
 
         $Master = \App\Models\Master::all();
 
-        return view('dayOff', ['MasterSchedules' => $MasterSchedulesList, 'Masters' => $Master ]);
+        return view('dayOff', ['masterSchedules' => $masterSchedules, 'Masters' => $Master ]);
     }
-    public function SaveDayOffSlot($dayStart,  $WorkerId, $DayOffInterval,)
+    public function SaveDayOffSlot($dayStart,  $workerId, $dayOffInterval,)
     {
         $start = new DateTime($dayStart); // Сьогоднішня дата
         $end = clone $start; // Клонуємо початкову дату
-        $end->add(new DateInterval("P{$DayOffInterval}D"));
+        $end->add(new DateInterval("P{$dayOffInterval}D"));
 
         $totalDeyOff = [];
 
         while ($start <= $end) {
             $totalDeyOff[] = [
                 'dayOff' => $start->format('Y-m-d'),
-                'WorkerId' => $WorkerId,
+                'WorkerId' => $workerId,
             ];
             $start->add(new DateInterval('P1D')); // Додаємо один день
         }
@@ -50,7 +41,7 @@ class DayOffController extends Controller
         }
 
 
-        return view('DayOffSave', ['DayOffSlots' => $totalDeyOff]);
+        return view('DayOffSave', ['dayOffSlots' => $totalDeyOff]);
     }
 
 }

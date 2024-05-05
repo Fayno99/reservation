@@ -46,24 +46,29 @@ protected $table = 'users';
         ];
     }
 
+
+    public const ROLE_ADMIN = '3';
+    public const ROLE_USER = '1';
+    public const ROLE_MANAGER = '4';
+    public const ROLE_ASSISTANT = '2';
+
     public function isManager()
     {
-        return $this->isAdmin == '4'; //manager
+        return $this->isAdmin == User::ROLE_MANAGER;
     }
 
     public function isAdmin()
     {
-        return $this->isAdmin == '3'; //admin
+        return $this->isAdmin == User::ROLE_ADMIN;
     }
 
     public function isAssistant()
     {
-        return $this->isAdmin == '2';   //assistant
-    }
+        return $this->isAdmin == User::ROLE_ASSISTANT;     }
 
     public function isUser()
     {
-        return $this->isAdmin == '1';  ///User
+        return $this->isAdmin == User::ROLE_USER;
     }
 
 }

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Middleware\IfNotAdmin;
+use App\Http\Middleware\IfNotAssistant;
+use App\Http\Middleware\IfNonManager;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,7 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'auth.manager' => IfNonManager::class,
+            'auth.assistant' => IfNotAssistant::class,
+            'auth.admin' => IfNotAdmin::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

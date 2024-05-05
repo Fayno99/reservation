@@ -10,13 +10,14 @@ class Work_order extends Model
     use HasFactory;
     protected $table = 'work_orders';
     public $timestamps = false;
-
+    protected $dates = ['created_at', 'updated_at', 'your_custom_date_field'];
     protected $fillable =
         [
             'id',
             'companies_id',
             'masters_id',
             'clients_id',
+            'users_id',
             'works_id',
             'motorcycles',
             'start_order',
@@ -37,5 +38,9 @@ class Work_order extends Model
     public function work()
     {
         return $this->belongsTo(\App\Models\Work::class, 'works_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'users_id');
     }
 }

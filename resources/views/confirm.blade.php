@@ -102,9 +102,10 @@
                         <div class="alert alert-success">
                             <h1 class="mb-3">  {{ Session::get('success') }}</h1>
                             <div class="alert alert-success" data-wow-delay="0.6s">
-                                <h4 class="mb-3">Компанія: {{$order->companiesName}}</h4>
-                                <h3 class="mb-3">Ім'я механіка: {{$order->masterName}}</h3>
-                                <h3 class="mb-3">Вид роботи: {{$order->workName}} </h3>
+                                <h4 class="mb-3">Компанія: {{$order->companies->name}}</h4>
+                                <h3 class="mb-3">Ім'я механіка: {{$order->master->name}}</h3>
+                                <h3 class="mb-3">Вид роботи: {{$order->work->name_of_work}} </h3>
+                                <h3 class="mb-3">Ціна: {{$order->work->price}} </h3>
                                 <h3 class="mb-3">Тип мотоциклу: {{$order->motorcycles}} </h3>
                                 <h3 class="mb-3">Початок замовлення: {{$order->start_order}} </h3>
                                 <h3 class="mb-3">Кінець замовлення:  {{$order->stop_order}} </h3>
