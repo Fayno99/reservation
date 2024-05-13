@@ -229,41 +229,5 @@ class MainController extends Controller
 
     }
 
-    public function adminListUser(Request $request)
-    {
-        $adminList = \App\Models\User::get();
 
-        // Заміна числових значень на назви ролей
-        foreach ($adminList as $admin) {
-            switch ($admin->isAdmin) {
-                case \App\Models\User::ROLE_ADMIN:
-                    $admin->isAdmin = 'ADMIN';
-                    break;
-                case \App\Models\User::ROLE_USER:
-                    $admin->isAdmin = 'USER';
-                    break;
-                case \App\Models\User::ROLE_MANAGER:
-                    $admin->isAdmin = 'MANAGER';
-                    break;
-                case \App\Models\User::ROLE_ASSISTANT:
-                    $admin->isAdmin = 'ASSISTANT';
-                    break;
-                default:
-                    $admin->isAdmin = 'UNKNOWN';
-            }
-        }
-        return view('adminList', ['adminList' => $adminList]);
-
-    }
-
-    public function adminListChange(Request $request, $id,$status)
-    {
-        $client = User::find($id);
-        if($client){
-            $client->isAdmin = $status;
-            $client->save();
-        }
-       // dd($client);
-      return redirect()->route('adminListUser');
-    }
 }
