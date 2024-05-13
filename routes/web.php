@@ -66,5 +66,23 @@ Route::get('/dayOff/{any}', [\App\Http\Controllers\DayOffController::class, 'Tot
 
 
 
-Route::get('/admin', [\App\Http\Controllers\MainController::class, 'adminListUser'])->name('adminListUser')->middleware('auth.admin');
-Route::get('/admin/{status}/{id}', [\App\Http\Controllers\MainController::class, 'adminListChange'])->middleware('auth.admin');
+Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'adminListUser'])->name('adminListUser')->middleware('auth.admin');
+Route::get('/admin/{status}/{id}', [\App\Http\Controllers\AdminController::class, 'adminListChange'])->middleware('auth.admin');
+
+Route::get('/adminWorker', [\App\Http\Controllers\AdminController::class, 'adminWorker'])->name('adminWorker')->middleware('auth.admin');
+//Route::get('/adminWorker/{status}/{id}', [\App\Http\Controllers\AdminController::class, 'adminListChange'])->middleware('auth.admin');
+Route::post('/adminAdWorker', 'App\Http\Controllers\AdminController@addWorker')->name('adminAdWorker')->middleware('auth.admin');
+Route::delete('/adminWorker/delete/{id}', 'App\Http\Controllers\AdminController@workerDelete')->name('adminWorkerDelete')->middleware('auth.admin');
+Route::get('/adminWorkerEdit/{id}', [App\Http\Controllers\AdminController::class, 'workerEdit'])->name('adminWorkerEdit')->middleware('auth.admin');
+Route::put('/adminWorkerUpdate/{id}', 'App\Http\Controllers\AdminController@workerUpdate')->name('adminWorkerUpdate')->middleware('auth.admin');
+Route::get('/adminWorkerWorkDay/{id}', [App\Http\Controllers\AdminController::class, 'adminDayOff'])->name('adminWorkerWorkDay')->middleware('auth.admin');
+Route::delete('/adminWorkerWorkDayDelete/{id}', 'App\Http\Controllers\AdminController@adminDayOffDelete')->name('adminWorkerWorkDay')->middleware('auth.admin');
+Route::put('/adminWorkerDayEdit/{id}', [App\Http\Controllers\AdminController::class, 'adminWorkerEdit'])->name('adminWorkerDayEdit')->middleware('auth.admin');
+
+Route::get('/adminListOfWork', [\App\Http\Controllers\AdminController::class, 'worksList'])->name('adminListOfWork')->middleware('auth.admin');
+Route::post('/adminListOfWork', 'App\Http\Controllers\AdminController@addWorks')->name('adminAddWorks')->middleware('auth.admin');
+Route::delete('/adminListOfWork/{id}', 'App\Http\Controllers\AdminController@worksDelete')->name('adminListOfWorkDel')->middleware('auth.admin');
+Route::get('/adminListOfWork/{id}/edit', 'App\Http\Controllers\AdminController@editWork')->name('adminListOfWorkEdit')->middleware('auth.admin');
+Route::put('/adminListOfWork/{id}/update', 'App\Http\Controllers\AdminController@updateWork')->name('work.update')->middleware('auth.admin');
+Route::get('/adminDashboard', [\App\Http\Controllers\AdminController::class, 'sumPriceTotal'])->name('sumPriceTotal')->middleware('auth.admin');
+Route::put('/sumPriceTotal', 'App\Http\Controllers\AdminController@sumPriceTotal')->name('sumPriceTotal')->middleware('auth.admin');

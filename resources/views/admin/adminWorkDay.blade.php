@@ -32,10 +32,14 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">Графік вихідних майстрів</h1>
-                    <a href="{{ asset('index') }}" class="h5 text-white">Додому</a>
+                    <h1 class="display-4 text-white animated zoomIn">Адмін панель</h1>
+                    <a href="{{ asset('adminDashboard') }}" class="h5 text-white">Статистика</a>
                     <i class="far fa-circle text-white px-2"></i>
-                    <a href="{{ asset('services') }}" class="h5 text-white">Сервіс</a>
+                    <a href="{{ asset('admin') }}" class="h5 text-white">Користувачі</a>
+                    <i class="far fa-circle text-white px-2"></i>
+                    <a href="{{ asset('adminListOfWork') }}" class="h5 text-white">Змінити вид робіт</a>
+                    <i class="far fa-circle text-white px-2"></i>
+                    <a href="{{ asset('adminWorker') }}" class="h5 text-white">Додати працівника</a>
                 </div>
             </div>
         </div>
@@ -65,6 +69,7 @@
     </div>
     <!-- Full Screen Search End -->
 
+
         <div class="container-fluid facts py-5 pt-lg-0">
             <div class="container py-5 pt-lg-0">
                 <div class="row gx-0">
@@ -73,42 +78,42 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th class="h1 text-white">  Ім'я   </th>
-                            <th class="h1 text-white"> Емейл  </th>
-                            <th class="h1 text-white"> Телефон  </th>
-                            <th class="h1 text-white"> Статус  </th>
-                            <th class="h1 text-white">  </th>
+                            <th class="h1 text-white">  Робітник  </th>
+                            <th class="h1 text-white"> День відпустки  </th>
+                            <th class="h1 text-white"> Змінити день на  </th>
+                            <th class="h1 text-white"> Дія  </th>
                         </tr>
                         </thead>
-
                         <tbody>
-                        @foreach($adminList as $admin)
+                        @foreach($masterSchedules as $masterSchedule)
                             <tr>
-                                <td class="h1 text-primary mb-4">{{ $admin->name }}</td>
-                                <td class="h1 text-primary mb-4">{{ $admin->email }}</td>
-                                <td class="h1 text-primary mb-4">{{ $admin->telephone }}</td>
+                                <td class="h1 text-primary mb-4" >{{ $masterSchedule->master->name }}</td>
+                                <td class="h1 text-primary mb-4">{{ $masterSchedule['work_day'] }}</td>
+
                                 <td class="h1 text-primary mb-4">
-                                    <select id="SelectStatus{{ $admin->id }}" class="form-select">
-                                        <option selected class="mb-3">{{ $admin->isAdmin }}</option>
-                                        <option value="1">USER</option>
-                                        <option value="2">ASSISTANT</option>
-                                        <option value="3">ADMIN</option>
-                                        <option value="4">MANAGER</option>
-                                    </select>
+
+                                        <form action="{{ route('adminWorkerDayEdit', $masterSchedule->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="date" id="myChangeDate" name="myChangeDate">
+                                            <button type="submit" class="btn btn-primary py-2 px-4 ms-3">Редагувати</button>
+                                        </form>
+
                                 </td>
-                                <td>
-                                    <div class="text-center">
-                                        <a href="#" id="createDayOffButton" class="btn btn-primary py-2 px-4 ms-3" onclick="
-                        const SelectStatus = document.getElementById('SelectStatus{{ $admin->id }}').value;
-                        const dayOffUrl = `admin/{{ $admin->id }}/${SelectStatus}/`;
-                        window.location.href = dayOffUrl;
-                    "> Зміна Статусу</a>
-                                    </div>
+                                <td class="h1 text-primary mb-4">
+
+                                    <form action="{{ route('adminWorkerWorkDay', $masterSchedule->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger py-2 px-4 ms-3">Видалити</button>
+                                        </form>
+
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>

@@ -76,7 +76,7 @@ CREATE TABLE `clients` (
   `email` varchar(255) NOT NULL,
   `telephone` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated-at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `clients_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -105,7 +105,7 @@ CREATE TABLE `companies` (
   `address` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated-at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -221,7 +221,7 @@ CREATE TABLE `master_schedules` (
   `masters_id` bigint(20) unsigned NOT NULL,
   `work_day` date NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated-at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `master_schedules_masters_id_foreign` (`masters_id`),
   CONSTRAINT `master_schedules_masters_id_foreign` FOREIGN KEY (`masters_id`) REFERENCES `masters` (`id`) ON DELETE CASCADE
@@ -250,7 +250,7 @@ CREATE TABLE `masters` (
   `name` varchar(255) NOT NULL,
   `companies_id` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated-at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `masters_companies_id_foreign` (`companies_id`),
@@ -330,7 +330,7 @@ CREATE TABLE `reviews` (
   `stars` bigint(20) unsigned NOT NULL,
   `masters_id` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated-at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `reviews_masters_id_foreign` (`masters_id`),
   CONSTRAINT `reviews_masters_id_foreign` FOREIGN KEY (`masters_id`) REFERENCES `masters` (`id`) ON DELETE CASCADE
@@ -394,7 +394,7 @@ CREATE TABLE `users` (
   `isAdmin` int(11) NOT NULL DEFAULT 1,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated-at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -426,7 +426,7 @@ CREATE TABLE `work_orders` (
   `start_order` datetime NOT NULL,
   `stop_order` datetime NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated-at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `users_id` bigint(20) unsigned DEFAULT NULL,
   `motorcycles` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -465,7 +465,7 @@ CREATE TABLE `works` (
   `price` int(11) NOT NULL,
   `time_for_work` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated-at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

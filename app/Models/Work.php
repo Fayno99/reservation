@@ -9,6 +9,8 @@ class Work extends Model
 {
     use HasFactory;
     protected $table = 'works';
+    public $timestamps = false;
+
     protected $fillable =
         [
           'id',
