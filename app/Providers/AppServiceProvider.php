@@ -4,15 +4,14 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
-
 class AppServiceProvider extends ServiceProvider
 {
+   protected $namespace = 'App\\Http\\Controllers';
     /**
      * Register any application services.
      */
     public function register(): void
     {
-        //
     }
 
     /**
@@ -22,7 +21,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-
 //        Gate::define('view-day-off', function ($user) {
 //            return $user->isAdmin()||$user->isManager();
 //        });
