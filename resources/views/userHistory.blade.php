@@ -88,7 +88,7 @@
                             <td class="h1 text-primary mb-4" >{{ $history->companies->name }}</td>
                             <td class="h1 text-primary mb-4">{{ $history->master->name }}</td>
                             <td class="h1 text-primary mb-4">{{ $history['motorcycles'] }}</td>
-                            <td class="h1 text-primary mb-4">{{ $history->work->name }}</td>
+                            <td class="h1 text-primary mb-4">{{ $history->work->name_of_work }}</td>
                             <td class="h1 text-primary mb-4">{{ $history['start_order'] }}</td>
                             <td class="h1 text-primary mb-4">{{ $history['stop_order'] }}</td>
                         </tr>
