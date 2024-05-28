@@ -13,7 +13,8 @@ class Master extends Model
         [
             'id',
             'name',
-            'companies_id'
+            'companies_id',
+            'image'
         ];
     public function companies()
     {

@@ -17,7 +17,8 @@ class IfNonManager
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->isAdmin == User::ROLE_ADMIN || Auth::user()->isAdmin == User::ROLE_MANAGER) {
+        $user = Auth::user();
+        if  ($user &&  (Auth::user()->isAdmin == User::ROLE_ADMIN || Auth::user()->isAdmin == User::ROLE_MANAGER)) {
 
             return $next($request);
         }

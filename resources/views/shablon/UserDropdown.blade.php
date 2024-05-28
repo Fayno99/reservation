@@ -15,19 +15,19 @@
             </x-dropdown-link>
         @endif
 
-        @if(Auth::user()->isAdmin()||Auth::user()->isManager())
+        @if(Auth::user()->isSuperAdmin()||Auth::user()->isManager())
             <x-dropdown-link href="{{ asset('dayOff')}}" >
                 {{ __('Вихідний Майстра') }}
             </x-dropdown-link>
         @endif
 
-        @if(Auth::user()->isAssistant()||Auth::user()->isAdmin())
+        @if(Auth::user()->isAssistant()||Auth::user()->isSuperAdmin())
             <x-dropdown-link  href="{{ asset('schedules')}}"  >
                 {{ __('Графік робіт') }}
             </x-dropdown-link>
         @endif
 
-        @if(Auth::user()->isAdmin())
+        @if(Auth::user()->isSuperAdmin())
             <x-dropdown-link  href="{{ asset('admin')}}"  >
                 {{ __('Адмін') }}
             </x-dropdown-link>

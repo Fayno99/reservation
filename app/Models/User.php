@@ -21,6 +21,9 @@ protected $table = 'users';
         'name',
         'email',
         'password',
+        'telephone',
+        'isAdmin'
+
     ];
 
     /**
@@ -57,7 +60,7 @@ protected $table = 'users';
         return $this->isAdmin == User::ROLE_MANAGER;
     }
 
-    public function isAdmin()
+    public function isSuperAdmin()
     {
         return $this->isAdmin == User::ROLE_ADMIN;
     }

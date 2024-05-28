@@ -27,13 +27,13 @@ Route::get('/index', [\App\Http\Controllers\MainController::class, 'index']);
 
 Route::get('/services', [\App\Http\Controllers\MainController::class, 'services'])->name('services');
 
-Route::get('/services/save-work-id/{interval}/{workId}', [\App\Http\Controllers\MainController::class, 'saveWorkId']);
+Route::get('/services/save-work-id/{interval}/{workId}', [\App\Http\Controllers\MainController::class, 'saveWorkId'])->name('save-work-id');
 Route::get('/services/{interval}/{workId}', [\App\Http\Controllers\MainController::class, 'timeSlot'])->name('timeSlot');
 
 
 Route::get('/master', [\App\Http\Controllers\MainController::class, 'master']);
 Route::get('/master/{id}', [\App\Http\Controllers\MainController::class, 'services']);
-Route::get('/master/{id}', [\App\Http\Controllers\MainController::class, 'saveMasterId']);
+Route::get('/master/{id}', [\App\Http\Controllers\MainController::class, 'saveMasterId'])->name('saveMasterId');;
 Route::get('/order/{startSlot}/{endSlot}', [\App\Http\Controllers\MainController::class, 'order'])->name('order');
 Route::get('/master', [\App\Http\Controllers\MainController::class, 'master']);
 
@@ -43,7 +43,7 @@ Route::get('/order/create', '\App\Http\Controllers\MainController@create')->name
 Route::post('/order/store', '\App\Http\Controllers\MainController@store')->name('order.store');
 
 
-Route::get('/schedules',[\App\Http\Controllers\MainController::class, 'schedules'])->middleware('auth.assistant');
+Route::get('/schedules',[\App\Http\Controllers\MainController::class, 'schedules']);
 Route::get('/schedules/{userid}',[\App\Http\Controllers\MainController::class, 'userHistory']);
 
 
@@ -65,24 +65,25 @@ Route::get('/dayOff', [\App\Http\Controllers\DayOffController::class, 'TotalDayO
 Route::get('/dayOff/{any}', [\App\Http\Controllers\DayOffController::class, 'TotalDayOff'])->where('any', '.*')->middleware('auth.manager');
 
 
+Route::middleware('auth.admin')->group(function () {
+Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'adminListUser'])->name('adminListUser');
+Route::get('/admin/{status}/{id}', [\App\Http\Controllers\AdminController::class, 'adminListChange']);
 
-Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'adminListUser'])->name('adminListUser')->middleware('auth.admin');
-Route::get('/admin/{status}/{id}', [\App\Http\Controllers\AdminController::class, 'adminListChange'])->middleware('auth.admin');
-
-Route::get('/adminWorker', [\App\Http\Controllers\AdminController::class, 'adminWorker'])->name('adminWorker')->middleware('auth.admin');
+Route::get('/adminWorker', [\App\Http\Controllers\AdminController::class, 'adminWorker'])->name('adminWorker');
 //Route::get('/adminWorker/{status}/{id}', [\App\Http\Controllers\AdminController::class, 'adminListChange'])->middleware('auth.admin');
-Route::post('/adminAdWorker', 'App\Http\Controllers\AdminController@addWorker')->name('adminAdWorker')->middleware('auth.admin');
-Route::delete('/adminWorker/delete/{id}', 'App\Http\Controllers\AdminController@workerDelete')->name('adminWorkerDelete')->middleware('auth.admin');
-Route::get('/adminWorkerEdit/{id}', [App\Http\Controllers\AdminController::class, 'workerEdit'])->name('adminWorkerEdit')->middleware('auth.admin');
-Route::put('/adminWorkerUpdate/{id}', 'App\Http\Controllers\AdminController@workerUpdate')->name('adminWorkerUpdate')->middleware('auth.admin');
-Route::get('/adminWorkerWorkDay/{id}', [App\Http\Controllers\AdminController::class, 'adminDayOff'])->name('adminWorkerWorkDay')->middleware('auth.admin');
-Route::delete('/adminWorkerWorkDayDelete/{id}', 'App\Http\Controllers\AdminController@adminDayOffDelete')->name('adminWorkerWorkDay')->middleware('auth.admin');
-Route::put('/adminWorkerDayEdit/{id}', [App\Http\Controllers\AdminController::class, 'adminWorkerEdit'])->name('adminWorkerDayEdit')->middleware('auth.admin');
+Route::post('/adminAdWorker', 'App\Http\Controllers\AdminController@addWorker')->name('adminAdWorker');
+Route::delete('/adminWorker/delete/{id}', 'App\Http\Controllers\AdminController@workerDelete')->name('adminWorkerDelete');
+Route::get('/adminWorkerEdit/{id}', [App\Http\Controllers\AdminController::class, 'workerEdit'])->name('adminWorkerEdit');
+Route::put('/adminWorkerUpdate/{id}', 'App\Http\Controllers\AdminController@workerUpdate')->name('adminWorkerUpdate');
+Route::get('/adminWorkerWorkDay/{id}', [App\Http\Controllers\AdminController::class, 'adminDayOff'])->name('adminWorkerWorkDay');
+Route::delete('/adminWorkerWorkDayDelete/{id}', 'App\Http\Controllers\AdminController@adminDayOffDelete')->name('adminWorkerWorkDay');
+Route::put('/adminWorkerDayEdit/{id}', [App\Http\Controllers\AdminController::class, 'adminWorkerEdit'])->name('adminWorkerDayEdit');
 
-Route::get('/adminListOfWork', [\App\Http\Controllers\AdminController::class, 'worksList'])->name('adminListOfWork')->middleware('auth.admin');
-Route::post('/adminListOfWork', 'App\Http\Controllers\AdminController@addWorks')->name('adminAddWorks')->middleware('auth.admin');
-Route::delete('/adminListOfWork/{id}', 'App\Http\Controllers\AdminController@worksDelete')->name('adminListOfWorkDel')->middleware('auth.admin');
-Route::get('/adminListOfWork/{id}/edit', 'App\Http\Controllers\AdminController@editWork')->name('adminListOfWorkEdit')->middleware('auth.admin');
-Route::put('/adminListOfWork/{id}/update', 'App\Http\Controllers\AdminController@updateWork')->name('work.update')->middleware('auth.admin');
-Route::get('/adminDashboard', [\App\Http\Controllers\AdminController::class, 'sumPriceTotal'])->name('sumPriceTotal')->middleware('auth.admin');
-Route::put('/sumPriceTotal', 'App\Http\Controllers\AdminController@sumPriceTotal')->name('sumPriceTotal')->middleware('auth.admin');
+Route::get('/adminListOfWork', [\App\Http\Controllers\AdminController::class, 'worksList'])->name('adminListOfWork');
+Route::post('/adminListOfWork', 'App\Http\Controllers\AdminController@addWorks')->name('adminAddWorks');
+Route::delete('/adminListOfWork/{id}', 'App\Http\Controllers\AdminController@worksDelete')->name('adminListOfWorkDel');
+Route::get('/adminListOfWork/{id}/edit', 'App\Http\Controllers\AdminController@editWork')->name('adminListOfWorkEdit');
+Route::put('/adminListOfWork/{id}/update', 'App\Http\Controllers\AdminController@updateWork')->name('work.update');
+Route::get('/adminDashboard', [\App\Http\Controllers\AdminController::class, 'sumPriceTotal'])->name('sumPriceTotal');
+Route::put('/sumPriceTotal', 'App\Http\Controllers\AdminController@sumPriceTotal')->name('sumPriceTotal');
+});
