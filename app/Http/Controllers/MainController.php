@@ -99,7 +99,7 @@ class MainController extends Controller
 
     public function store(Request $request)
     {
-        $userId = '0';
+        $userId = '21';
         $clientId = '1';
         if (Auth::check()) {
             $userId = Auth::id();

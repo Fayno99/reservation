@@ -17,7 +17,8 @@ class IfNotAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->isAdmin == User::ROLE_ADMIN ) {
+        $user = Auth::user();
+        if ($user && (Auth::user()->isAdmin == User::ROLE_ADMIN )) {
 
             return $next($request);
         }

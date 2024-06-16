@@ -17,7 +17,8 @@ class IfNotAssistant
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->isAdmin == User::ROLE_ADMIN || Auth::user()->isAdmin == User::ROLE_ASSISTANT ) {
+        $user = Auth::user();
+        if ($user && (Auth::user()->isAdmin == User::ROLE_ADMIN || Auth::user()->isAdmin == User::ROLE_ASSISTANT )) {
 
             return $next($request);
         }
