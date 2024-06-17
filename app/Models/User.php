@@ -23,7 +23,6 @@ protected $table = 'users';
         'password',
         'telephone',
         'isAdmin'
-
     ];
 
     /**
@@ -48,7 +47,6 @@ protected $table = 'users';
             'password' => 'hashed',
         ];
     }
-
 
     public const ROLE_ADMIN = '3';
     public const ROLE_USER = '1';

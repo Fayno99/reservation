@@ -17,7 +17,8 @@ class Work extends Model
           'name_of_work',
           'description',
           'price',
-          'time_for_work'
+          'time_for_work',
+          'active',
         ];
 
 

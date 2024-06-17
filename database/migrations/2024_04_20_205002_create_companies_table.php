@@ -20,6 +20,20 @@ return new class extends Migration
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
         });
+        DB::table('companies')->insert([
+            [
+                'name' => 'King Custom',
+                'address' => 'Nord Street',
+                'description' => 'Компанія заснована в 2014 році',
+            ],
+            [
+                'name' => 'King Custom',
+                'address' => 'West Street',
+                'description' => 'Компанія заснована в 2016 році',
+            ],
+
+        ]);
+
     }
 
     /**

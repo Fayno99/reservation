@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Master;
 use App\Models\Master_schedule;
 use App\Models\User;
 use App\Models\Work_order;
@@ -23,6 +24,7 @@ class MainController extends Controller
 
     protected $mainService;
     protected $timeSlotService;
+    private $str;
 
     public function __construct(MainService $mainService, TimeSlotsService $timeSlotService)
     {
@@ -32,19 +34,18 @@ class MainController extends Controller
 
     public function index()
     {
-        $allData=$this->mainService->index();
+        $allData = $this->mainService->index();
         return view('index',
             ['reviewList' => $allData['reviews'],
-            'masterList' => $allData["masters"],
-            'serviceList' => $allData ['service']]
+                'masterList' => $allData["masters"],
+                'serviceList' => $allData ['service']]
         );
     }
 
 
-
     public function timeSlot($interval, $test)
     {
-        $timeSlots = $this->timeSlotService->timeSlot($interval,$test);
+        $timeSlots = $this->timeSlotService->timeSlot($interval, $test);
         return view('timeSlots', ['timeSlots' => $timeSlots]);
     }
 
@@ -56,18 +57,18 @@ class MainController extends Controller
 
     public function services()
     {
-        $servicesData=$this->mainService->services();
+        $servicesData = $this->mainService->services();
 
-         return view('services',
-             ['reviewList' => $servicesData['review'],
-              'masterList' => $servicesData['master'],
-              'serviceList' => $servicesData['service']]);
+        return view('services',
+            ['reviewList' => $servicesData['review'],
+                'masterList' => $servicesData['master'],
+                'serviceList' => $servicesData['service']]);
     }
 
     public function master()
     {
 
-        $master = \App\Models\Master::all();
+        $master = Master::all();
 
         return view('master', ['masterList' => $master]);
     }
@@ -99,8 +100,9 @@ class MainController extends Controller
 
     public function store(Request $request)
     {
-        $userId = '21';
-        $clientId = '1';
+        $userId = '1';
+        $this->str = '1';
+        $clientId = $this->str;
         if (Auth::check()) {
             $userId = Auth::id();
 
@@ -139,14 +141,26 @@ class MainController extends Controller
     public function ShowWorkOrder(Request $request)
     {
         $id = Session::get('orderId');
-        $work_orders = \App\Models\Work_order::with('master', 'companies', 'client', 'work')->where('id', $id)->get();
+        $work_orders = Work_order::with('master', 'companies', 'client', 'work')->where('id', $id)->get();
 
         return view('confirm', ['work_order' => $work_orders]);
     }
 
-    public function schedules()
+    public function schedules(Request $request)
     {
-        $schedules = \App\Models\Work_order::with('master', 'companies', 'client', 'user', 'work')
+        $startDate = $request->myStartDate;
+        $endDate = $request->myStopDate;
+
+        if ($startDate == null && $endDate == null) {
+            $start_date = Carbon::now();
+            $end_date = Carbon::now()->addDays(14);
+        } else {
+            $start_date = Carbon::parse($startDate)->startOfDay();
+            $end_date = Carbon::parse($endDate)->endOfDay();
+        }
+
+        $schedules = Work_order::with('master', 'companies', 'client', 'user', 'work')
+            ->whereBetween('start_order', [$start_date, $end_date]) // Умова для дати
             ->orderBy('masters_id')
             ->orderBy('start_order')
             ->get();
@@ -154,13 +168,18 @@ class MainController extends Controller
         $groupedSchedules = $schedules->groupBy(function ($item, $key) {
             return $item->master->name;
         });
-        return view('schedules', ['schedules' => $groupedSchedules]);
+
+        return view('schedules', [
+            'schedules' => $groupedSchedules,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            ]);
     }
 
 
     public function userHistory(Request $request, $id)
     {
-        $histories = \App\Models\Work_order::with('master', 'companies', 'client', 'work')->where('users_id', $id)->get();
+        $histories = Work_order::with('master', 'companies', 'client', 'work')->where('users_id', $id)->get();
 
         return view('userHistory', ['historyList' => $histories]);
 

@@ -13,7 +13,7 @@
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-            <a href="{{ asset('index.html') }}" class="navbar-brand p-0">
+            <a href="{{ asset('index') }}" class="navbar-brand p-0">
                 <h1 class="m-0">  <img class="logo" src="{{ asset('img/logo.png')}}" alt="Image">    <i class="fas fa-biking-mountain me-2"></i>KingKustom</h1>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -70,6 +70,8 @@
             </div>
             <div class="row g-2">
                 @foreach($masterList as $master)
+                    @if($master->active == 1)
+
                     <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
                         <div class="team-item bg-light rounded overflow-hidden">
                             <div class="team-img position-relative overflow-hidden">
@@ -86,6 +88,7 @@
                             </div>
                         </div>
                     </div>
+                     @endif
                 @endforeach
 
             </div>

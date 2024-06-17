@@ -142,6 +142,7 @@ class ApiController extends Controller
         if (!$tempOrder) {
             return response()->json(['error' => 'No order data found'], 400);
         }
+
         $order = Work_order::create([
             'companies_id' => $tempOrder->companies_id,
             'masters_id' => $tempOrder->masters_id,
@@ -155,7 +156,14 @@ class ApiController extends Controller
 
         $tempOrder->delete();
 
-        return response()->json(['message' => 'Order submitted successfully', 'order_id' => $order->id]);
+        $orderId = $order->id;
+
+        $orderData = Work_order::with('master', 'companies', 'client', 'work')
+            ->where('id', $orderId)
+            ->first();
+
+        return response()->json(['message' => 'Order submitted successfully', 'data' => $orderData]);
     }
+
 
 }

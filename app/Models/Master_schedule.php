@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Master_schedule extends Model
 {
     use HasFactory;
+
+
     protected $table = 'master_schedules';
     public $timestamps = false;
 
@@ -20,6 +22,6 @@ class Master_schedule extends Model
         ];
     public function master()
     {
-        return $this->belongsTo(\App\Models\Master::class, 'masters_id');
+        return $this->belongsTo(Master::class, 'masters_id');
     }
 }

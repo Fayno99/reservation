@@ -1,7 +1,7 @@
 <!-- Navbar & Carousel Start -->
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-        <a href="{{ asset('index.html')}}" class="navbar-brand p-0">
+        <a href="{{ asset('index')}}" class="navbar-brand p-0">
             <h1 class="m-0">  <img class="logo" src="{{ asset('img/logo.png')}}" alt="Image">    <i class="fas fa-biking-mountain me-2"></i>KingKustom</h1>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -25,7 +25,7 @@
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                     <div class="p-3" style="max-width: 900px;">
                         <h5 class="text-white text-uppercase mb-3 animated slideInDown">Креативні & Іноваційні</h5>
-                        <h1 class="display-1 text-white mb-md-4 animated zoomIn">Краше рішення для ремонту вашого байку</h1>
+                        <h1 class="display-1 text-white mb-md-4 animated zoomIn">Краще рішення для ремонту вашого байку</h1>
                         <a href="/services" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Послуги</a>
                         <a href="/about" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Зв'язатися з нами</a>
                     </div>

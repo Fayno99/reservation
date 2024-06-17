@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Master;
 use App\Models\Master_schedule;
 use DateInterval;
 use DateTime;
@@ -11,9 +12,9 @@ class DayOffController extends Controller
 {
     public function TotalDayOff()
     {
-        $masterSchedules= \App\Models\Master_schedule::with('master')->get();
+        $masterSchedules= Master_schedule::with('master')->get();
 
-        $Master = \App\Models\Master::all();
+        $Master = Master::all();
 
         return view('dayOff', ['masterSchedules' => $masterSchedules, 'Masters' => $Master ]);
     }
@@ -34,14 +35,15 @@ class DayOffController extends Controller
         }
 
         foreach ($totalDeyOff as $dayOffSlot) {
+
+            $masterName = Master::find($dayOffSlot['WorkerId'])->name;
             $masterSchedule = new Master_schedule();
             $masterSchedule->masters_id = $dayOffSlot['WorkerId'];
             $masterSchedule->work_day = $dayOffSlot['dayOff'];
             $masterSchedule->save();
         }
 
-
-        return view('DayOffSave', ['dayOffSlots' => $totalDeyOff]);
+        return view('DayOffSave', ['dayOffSlots' => $totalDeyOff, 'masterName' => $masterName]);
     }
 
 }

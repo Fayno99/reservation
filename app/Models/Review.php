@@ -19,7 +19,7 @@ class Review extends Model
 
     public function master()
     {
-        return $this->belongsTo(\App\Models\Master::class, 'masters_id');
+        return $this->belongsTo(Master::class, 'masters_id');
     }
 
 

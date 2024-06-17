@@ -20,7 +20,15 @@ return new class extends Migration
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
         });
-    }
+
+        DB::table('clients')->insert([
+            [
+                'name' => 'David',
+                'email' => 'david@david.com',
+                'telephone' => '1715373122',
+            ],
+            ]);
+}
 
     /**
      * Reverse the migrations.

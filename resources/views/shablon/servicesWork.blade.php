@@ -7,10 +7,10 @@
         </div>
         <div class="row g-5">
             @foreach($serviceList as $service)
+                @if($service->active == 1)
                 <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
                     <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
                         <h4 class="mb-3">{{$service->name_of_work}}</h4>
-                        <p class="m-0">{{$service->description}}</p>
                         <h3 class="mb-3">{{$service->price}} Грн</h3>
                         <h4 class="mb-3">Час виконання робіт</h4>
                         <h3 class="mb-3">{{$service->time_for_work}} Хв</h3>
@@ -20,6 +20,7 @@
                         </a>
                     </div>
                 </div>
+                @endif
             @endforeach
             <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
                 <div class="position-relative bg-primary rounded h-100 d-flex flex-column align-items-center justify-content-center text-center p-5">

@@ -31,6 +31,7 @@ class TimeSlotCalculationTest extends TestCase
         Company::create($companyData);
         $this->assertDatabaseHas('companies', $companyData);
     }
+
     public function test_add_master_to_table()
     {
         $this->assertTrue(Schema::hasTable('masters'));
@@ -43,12 +44,13 @@ class TimeSlotCalculationTest extends TestCase
         Master::create($masterData);
         $this->assertDatabaseHas('masters', $masterData);
     }
+
     public function test_add_user_to_table()
     {
         $this->assertTrue(Schema::hasTable('users'));
         $masterData = [
-            'name' => 'user',
-            'email' => 'user@test.com',
+            'name' => 'userTester',
+            'email' => 'tester@test.com',
             'password' => 'password',
             'telephone' => '0123456789',
             'isAdmin' => '1',
@@ -56,8 +58,8 @@ class TimeSlotCalculationTest extends TestCase
 
         User::create($masterData);
         $this->assertDatabaseHas('users', [
-            'name' => 'user',
-            'email' => 'user@test.com',
+            'name' => 'userTester',
+            'email' => 'tester@test.com',
             'telephone' => '0123456789',
             'isAdmin' => '1',
         ]);
@@ -68,6 +70,7 @@ class TimeSlotCalculationTest extends TestCase
         $this->assertTrue(Schema::hasTable('masters'));
 
     }
+
     public function test_save_master_id_to_session()
     {
         $id = 1;
@@ -79,6 +82,7 @@ class TimeSlotCalculationTest extends TestCase
         $response->assertRedirect(route('services'));
 
     }
+
     public function test_add_services_to_table()
     {
         $this->assertTrue(Schema::hasTable('works'));
@@ -95,6 +99,7 @@ class TimeSlotCalculationTest extends TestCase
         $response = $this->get("services");
         $response->assertStatus(200);
     }
+
     public function test_save_work_id_to_session_and_redirect()
     {
         $interval = 300;
@@ -127,7 +132,7 @@ class TimeSlotCalculationTest extends TestCase
         $startDateTime = str_replace(' ', ' ', $firstDate . ' ' . $firstSlot['start_time']);
         $endDateTime = str_replace(' ', ' ', $firstDate . ' ' . $firstSlot['end_time']);
 
-        $response = $this->get( "/order/{$startDateTime}/{$endDateTime}");
+        $response = $this->get("/order/{$startDateTime}/{$endDateTime}");
         $response->assertStatus(200);
     }
 
@@ -161,7 +166,7 @@ class TimeSlotCalculationTest extends TestCase
 
     public function testOrderCreation()
     {
-        Session::put('id_client', 1);
+        Session::put('id_client', 2);
         Session::put('start-time', '2024-05-27 13:10');
         Session::put('end-time', '2024-05-27 18:10');
         Session::put('master_id', 1);
@@ -170,7 +175,7 @@ class TimeSlotCalculationTest extends TestCase
             'companies_id' => 1,
             'masters_id' => session('master_id'),
             'clients_id' => session('id_client'),
-            'users_id' => 21,
+            'users_id' => 1,
             'works_id' => session('service_id'),
             'motorcycles' => 'Honda',
             'start_order' => session('start-time'),

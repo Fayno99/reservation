@@ -12,7 +12,7 @@
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-            <a href="{{ asset('index.html') }}" class="navbar-brand p-0">
+            <a href="{{ asset('index') }}" class="navbar-brand p-0">
                 <h1 class="m-0">  <img class="logo" src="{{ asset('img/logo.png')}}" alt="Image">    <i class="fas fa-biking-mountain me-2"></i>KingKustom</h1>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -58,6 +58,10 @@
         </div>
     </div>
 
+
+
+
+
     <!-- Full Screen Search End -->
          <div class="container-fluid facts py-5 pt-lg-0">
             <div class="container py-5 pt-lg-0">
@@ -66,11 +70,24 @@
 
 
                     </div>
+                    <form action="{{ route('schedulesDay') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="_method" value="PUT">
+                        <div style="font-size:26px; color:#a1d2dd;"  > Діапазон відображення від {{ $start_date->format('Y-m-d') }} до {{ $end_date->format('Y-m-d') }}</div>
+                        <input type="date" id="myDateStart" name="myStartDate" style="font-size:26px;" value="{{ $start_date->format('Y-m-d') }}">
+                        <input type="date" id="myDateEnd" name="myStopDate" style="font-size:26px;" value="{{ $end_date->format('Y-m-d') }}">
+                        <button type="submit" class="btn btn-primary py-2 px-4 ms-3">Змінити</button>
+                    </form>
+
+                    <div class="col-10">
+
+
+                    </div>
                     <table class="table">
                         <thead>
                         <tr>
                             <th class="h1 text-white"> Клієнт  </th>
-                            <th class="h1 text-white"> User  </th>
+                            <th class="h1 text-white"> Юзер  </th>
                             <th class="h1 text-white"> Вид робіт  </th>
                             <th class="h1 text-white"> Мотоцикл  </th>
                             <th class="h1 text-white"> Початок  </th>
@@ -84,8 +101,17 @@
                             </tr>
                             @foreach($scheduleGroup as $schedule)
                                 <tr>
-                                    <td>{{ $schedule->client->name }}</td>
-                                    <td>{{ $schedule->users_id }}</td>
+                                    <td>
+                                        @if($schedule->users_id != 1)
+                                        @else
+                                            {{ $schedule->client->name }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(($schedule->users_id)  != 1)
+                                            {{$schedule->user->name}}
+                                        @endif
+                                    </td>
                                     <td>{{ $schedule->work->name_of_work }}</td>
                                     <td>{{ $schedule->motorcycles }}</td>
                                     <td>{{ $schedule->start_order }}</td>

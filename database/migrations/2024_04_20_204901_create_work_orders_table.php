@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('companies_id')->nullable(false);
             $table->unsignedBigInteger('masters_id')->nullable(false);
-            $table->unsignedBigInteger('clients_id');
+            $table->unsignedBigInteger('clients_id')->nullable();
             $table->unsignedBigInteger('users_id');
             $table->unsignedBigInteger('works_id')->nullable(false);
             $table->string('motorcycles')->nullable(false);

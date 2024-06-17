@@ -14,11 +14,12 @@ class Master extends Model
             'id',
             'name',
             'companies_id',
-            'image'
+            'image',
+            'active',
         ];
     public function companies()
     {
-        return $this->belongsTo(\App\Models\Company::class, 'companies_id');
+        return $this->belongsTo(Company::class, 'companies_id');
     }
 
 }

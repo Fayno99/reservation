@@ -27,9 +27,9 @@ class MainService
 
     public function services()
     {
-        $review = \App\Models\Review::all();
-        $master = \App\Models\Master::all();
-        $service = \App\Models\Work::all();
+        $review = Review::all();
+        $master = Master::all();
+        $service = Work::all();
         return  [
             'review' => $review,
             'master' => $master,

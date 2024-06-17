@@ -25,22 +25,24 @@ class Work_order extends Model
         ];
     public function master()
     {
-        return $this->belongsTo(\App\Models\Master::class, 'masters_id');
+        return $this->belongsTo(Master::class, 'masters_id');
     }
     public function companies()
     {
-        return $this->belongsTo(\App\Models\Company::class, 'companies_id');
+        return $this->belongsTo(Company::class, 'companies_id');
     }
     public function client()
     {
-        return $this->belongsTo(\App\Models\Client::class, 'clients_id');
+        return $this->belongsTo(Client::class, 'clients_id');
     }
     public function work()
     {
-        return $this->belongsTo(\App\Models\Work::class, 'works_id');
+        return $this->belongsTo(Work::class, 'works_id');
     }
     public function user()
     {
-        return $this->belongsTo(\App\Models\User::class, 'users_id');
+        return $this->belongsTo(User::class, 'users_id');
     }
+public function user2()    {
+        return $this->belongsTo(User::class, 'users_id');}
 }
