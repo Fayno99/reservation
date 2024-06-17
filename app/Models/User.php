@@ -6,11 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-
+protected $table = 'users';
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'telephone',
+        'isAdmin'
     ];
 
     /**
@@ -44,4 +47,29 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public const ROLE_ADMIN = '3';
+    public const ROLE_USER = '1';
+    public const ROLE_MANAGER = '4';
+    public const ROLE_ASSISTANT = '2';
+
+    public function isManager()
+    {
+        return $this->isAdmin == User::ROLE_MANAGER;
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->isAdmin == User::ROLE_ADMIN;
+    }
+
+    public function isAssistant()
+    {
+        return $this->isAdmin == User::ROLE_ASSISTANT;     }
+
+    public function isUser()
+    {
+        return $this->isAdmin == User::ROLE_USER;
+    }
+
 }
